@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Default Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-gray-800">Credit Card Default Detection</h1>
+            <p class="text-gray-500 mt-2">Upload your transaction data (CSV) to identify potential default risks.</p>
+        </header>
+
+        <form action="/predict" method="post" enctype="multipart/form-data" class="space-y-6">
+            <div class="flex items-center justify-center w-full">
+                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p class="mb-2 text-sm text-gray-500 font-semibold">Click to upload or drag and drop</p>
+                        <p class="text-xs text-gray-400">CSV files only</p>
+                    </div>
+                    <input id="dropzone-file" name="file" type="file" class="hidden" accept=".csv" required />
+                </label>
+            </div>
+
+            <div id="file-name-display" class="text-sm text-blue-600 text-center font-medium hidden"></div>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                Run Prediction Pipeline
+            </button>
+        </form>
+
+        <footer class="mt-8 pt-6 border-t border-gray-100 text-center text-xs text-gray-400">
+            Built with Flask & Machine Learning
+        </footer>
+    </div>
+
+    <script>
+        // Display selected file name
+        const fileInput = document.getElementById('dropzone-file');
+        const nameDisplay = document.getElementById('file-name-display');
+        
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                nameDisplay.textContent = "Selected: " + this.files[0].name;
+                nameDisplay.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
