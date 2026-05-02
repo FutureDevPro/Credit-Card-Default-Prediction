@@ -75,13 +75,13 @@ jobs:
             docker rm fraud-container || true
 
             # Login to ECR
-            aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 370693151034.dkr.ecr.ap-south-1.amazonaws.com/credit-card-fraud
+            aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
 
             # Pull latest image
-            docker pull 370693151034.dkr.ecr.ap-south-1.amazonaws.com/credit-card-fraud
+            docker pull ${{ secrets.ECR_REPOSITORY }}
 
             # Run container
             docker run -d -p 5000:5000 \
               --name fraud-container \
               -e MONGO_DB_URL=${{ secrets.MONGO_DB_URL }} \
-              370693151034.dkr.ecr.ap-south-1.amazonaws.com/credit-card-fraud
+              ${{ secrets.ECR_REPOSITORY }}
