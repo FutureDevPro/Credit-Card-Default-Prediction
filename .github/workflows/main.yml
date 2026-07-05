@@ -72,8 +72,8 @@ jobs:
 
             sudo systemctl start docker || true
 
-            docker stop fraud-container || true
-            docker rm fraud-container || true
+            docker stop credit-card-default-prediction || true
+            docker rm credit-card-default-prediction || true
 
             aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | \
             docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
@@ -81,7 +81,7 @@ jobs:
             docker pull ${{ secrets.ECR_REPOSITORY }}:latest
 
             docker run -d \
-              --name fraud-container \
+              --name credit-card-default-prediction \
               -p 5000:5000 \
               -e MONGO_DB_URL="${{ secrets.MONGO_DB_URL }}" \
               -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" \
