@@ -72,8 +72,11 @@ jobs:
 
             sudo systemctl start docker || true
 
-            docker stop credit-card-default-prediction || true
-            docker rm credit-card-default-prediction || true
+            docker stop fraud-container || true
+            docker rm fraud-container || true
+            docker image prune -a -f
+            docker builder prune -a -f
+            docker system prune -f
 
             aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | \
             docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
